@@ -385,6 +385,20 @@
   .field input:focus, .field textarea:focus{
     outline:none; border-color:var(--accent-bright);
   }
+    .field input, .field textarea, .field select{
+    background:var(--deep-2); border:1px solid var(--line); color:var(--ink);
+    font-family:'Sora'; font-size:15px; padding:14px 16px; border-radius:2px;
+    resize:vertical; min-height:unset;
+  }
+  .field textarea{ min-height:100px; }
+  .field select{ appearance:none; cursor:pointer; }
+  .field select option{ background:var(--deep-2); color:var(--ink); }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    outline:none; border-color:var(--accent-bright);
+  }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:520px){ .form-row{ grid-template-columns:1fr; } }
+  .form-note{ font-size:13px; color:var(--muted); margin-top:2px; }
   .form-note{ font-size:13px; color:var(--muted); margin-top:2px; }
 
   .contact-channels{
@@ -575,18 +589,50 @@
     <h2>Let's build your digital presence.</h2>
     <p class="contact-sub">Tell us a bit about your business and what's missing — this sends straight to our WhatsApp.</p>
 
-    <form class="contact-form" id="waForm">
-      <div class="field">
-        <label for="wa-name">Your name</label>
-        <input id="wa-name" type="text" required placeholder="Your name">
+       <form class="contact-form" id="waForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="wa-name">Your name</label>
+          <input id="wa-name" type="text" required placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="wa-phone">WhatsApp / phone number</label>
+          <input id="wa-phone" type="tel" required placeholder="03xx-xxxxxxx">
+        </div>
       </div>
       <div class="field">
         <label for="wa-business">Business name</label>
         <input id="wa-business" type="text" placeholder="Business or brand name">
       </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="wa-service">Service you need</label>
+          <select id="wa-service" required>
+            <option value="" disabled selected>Choose one</option>
+            <option>Branding & Identity</option>
+            <option>Website / Web App</option>
+            <option>Social Media Marketing</option>
+            <option>Video / Reels</option>
+            <option>3D Animation</option>
+            <option>Packaging Design</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="wa-budget">Budget range</label>
+          <select id="wa-budget">
+            <option value="" disabled selected>Choose one</option>
+            <option>Under 20k PKR</option>
+            <option>20k – 50k PKR</option>
+            <option>50k – 100k PKR</option>
+            <option>100k+ PKR</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
       <div class="field">
-        <label for="wa-msg">What do you need?</label>
-        <textarea id="wa-msg" required placeholder="A website, a redesign, marketing help..."></textarea>
+        <label for="wa-msg">Tell us more about the project</label>
+        <textarea id="wa-msg" required placeholder="What are you trying to build or fix?"></textarea>
       </div>
       <button type="submit" class="btn-primary" style="width:100%;">Send on WhatsApp</button>
       <p class="form-note">Opens WhatsApp with your message ready to send — nothing is sent until you confirm there.</p>
@@ -921,11 +967,16 @@
   const WHATSAPP_NUMBER = '923352578947'; // no + or leading zeros
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    const name = document.getElementById('wa-name').value.trim();
+       const name = document.getElementById('wa-name').value.trim();
+    const phone = document.getElementById('wa-phone').value.trim();
     const business = document.getElementById('wa-business').value.trim();
+    const service = document.getElementById('wa-service').value.trim();
+    const budget = document.getElementById('wa-budget').value.trim();
     const msg = document.getElementById('wa-msg').value.trim();
-    let text = `Hi VYREXO, I'm ${name}.`;
+    let text = `Hi VYREXO, I'm ${name} (${phone}).`;
     if (business) text += ` My business is ${business}.`;
+    if (service) text += ` I need: ${service}.`;
+    if (budget) text += ` Budget: ${budget}.`;
     text += ` ${msg}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank', 'noopener');
