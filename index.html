@@ -120,17 +120,35 @@
 
   /* ---------- MARQUEE ---------- */
   .marquee{
+    position:relative;
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    overflow:hidden; white-space:nowrap; padding:22px 0; background:var(--deep);
-  }
-  .marquee-track{ display:inline-flex; gap:48px; animation: marquee 26s linear infinite; }
-  .marquee-track span{
-    font-family:'Unbounded'; font-weight:600; font-size:15px; letter-spacing:0.04em;
-    color:var(--muted); display:inline-flex; align-items:center; gap:48px;
-  }
-  .marquee-track span em{ font-style:normal; color:var(--accent-bright); margin-right:48px; }
-  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-
+    overflow:hidden; white-space:nowrap; padding:26px 0;
+    background: linear-gradient(90deg, var(--deep) 0%, var(--deep-2) 50%, var(--deep) 100%);
+}
+.marquee::before{
+    content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background: linear-gradient(90deg, var(--void) 0%, transparent 8%, transparent 92%, var(--void) 100%);
+}
+.marquee-track{ display:inline-flex; gap:56px; animation: marquee 30s linear infinite; }
+.marquee:hover .marquee-track{ animation-play-state:paused; }
+.marquee-track span{
+    font-family:'Unbounded'; font-weight:800; font-size:19px; letter-spacing:0.02em;
+    display:inline-flex; align-items:center; gap:56px;
+}
+.marquee-track span .word{
+    color:transparent;
+    -webkit-text-stroke:1px var(--muted);
+    transition: color .3s ease;
+}
+.marquee-track span .word:nth-child(4n+1),
+.marquee-track span .word:nth-child(4n+3){
+    color:var(--gold);
+    -webkit-text-stroke:0;
+}
+.marquee-track span em{
+    font-style:normal; color:var(--accent-bright); font-size:12px;
+}
+@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
   /* ---------- NAV ---------- */
 header{
     position:fixed; top:0; left:0; right:0; z-index:50;
@@ -500,8 +518,20 @@ header.scrolled{
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span><em>◆</em>BRAND IDENTITY<em>◆</em>WEB DESIGN<em>◆</em>MARKETING<em>◆</em>MOTION<em>◆</em>3D<em>◆</em>BRAND IDENTITY<em>◆</em>WEB DESIGN<em>◆</em>MARKETING<em>◆</em>MOTION<em>◆</em>3D</span>
-    <span aria-hidden="true"><em>◆</em>BRAND IDENTITY<em>◆</em>WEB DESIGN<em>◆</em>MARKETING<em>◆</em>MOTION<em>◆</em>3D<em>◆</em>BRAND IDENTITY<em>◆</em>WEB DESIGN<em>◆</em>MARKETING<em>◆</em>MOTION<em>◆</em>3D</span>
+    <span>
+      <span class="word">BRAND IDENTITY</span><em>◆</em>
+      <span class="word">WEB DESIGN</span><em>◆</em>
+      <span class="word">MARKETING</span><em>◆</em>
+      <span class="word">MOTION</span><em>◆</em>
+      <span class="word">3D</span><em>◆</em>
+    </span>
+    <span aria-hidden="true">
+      <span class="word">BRAND IDENTITY</span><em>◆</em>
+      <span class="word">WEB DESIGN</span><em>◆</em>
+      <span class="word">MARKETING</span><em>◆</em>
+      <span class="word">MOTION</span><em>◆</em>
+      <span class="word">3D</span><em>◆</em>
+    </span>
   </div>
 </div>
 
