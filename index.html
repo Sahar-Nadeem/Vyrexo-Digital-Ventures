@@ -370,11 +370,17 @@ header.scrolled{
     font-family:'Unbounded'; font-weight:600; font-size:clamp(20px,2.6vw,28px);
     display:flex; align-items:center; gap:16px;
   }
- .service-mark{
-    width:8px; height:8px; border-radius:2px; background:var(--accent-bright);
-    box-shadow:0 0 0 4px rgba(252,227,195,0.15);
+.service-mark{
+    width:8px; height:8px; border-radius:2px; background:var(--accent);
+    box-shadow:0 0 0 4px rgba(90,58,82,0.15);
     flex-shrink:0;
-    transition: box-shadow .3s ease, transform .3s ease;
+    transition: background .3s ease, box-shadow .3s ease;
+}
+  @media (hover: none){
+  .service-mark{
+    background:var(--accent-bright);
+    box-shadow:0 0 0 4px rgba(164,147,160,0.18);
+  }
 }
 .service-row:hover .service-mark{ box-shadow:0 0 0 6px rgba(252,227,195,0.25); transform:scale(1.15); }
   .service-row:hover .service-mark{ background:var(--accent-bright); box-shadow:0 0 0 4px rgba(164,147,160,0.18); }
