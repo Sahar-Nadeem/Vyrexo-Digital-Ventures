@@ -841,15 +841,15 @@ header.scrolled{
 })();
     </script>
   
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
  
-<script>
-// Hero: a lit, reflective centerpiece floating over a receding grid floor — an agency-reel
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+  // Hero: a lit, reflective centerpiece floating over a receding grid floor — an agency-reel
 // composition (studio lighting + product-render materials) rather than flat wireframe geometry.
 // Scroll drives a slow camera dolly/rotate so the piece feels directed, not just decorative.
 (function(){
   const mount = document.getElementById('hero-3d');
-  if (!mount || typeof THREE === 'undefined') return;
+if (!mount) return;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isSmall = window.innerWidth < 700;
 
