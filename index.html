@@ -119,36 +119,57 @@
   .reveal-stagger.in > *:nth-child(5){ transition-delay:.41s; }
 
   /* ---------- MARQUEE ---------- */
-  .marquee{
+ .marquee-wrap{
     position:relative;
     border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    overflow:hidden; white-space:nowrap; padding:26px 0;
-    background: linear-gradient(90deg, var(--deep) 0%, var(--deep-2) 50%, var(--deep) 100%);
+    overflow:hidden;
+    background: var(--deep);
+    padding:20px 0;
+    transform: skewY(-1.4deg);
+    margin:0 0 -6px;
 }
-.marquee::before{
-    content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
-    background: linear-gradient(90deg, var(--void) 0%, transparent 8%, transparent 92%, var(--void) 100%);
+.marquee-row{
+    overflow:hidden; white-space:nowrap;
+    transform: skewY(1.4deg);
 }
-.marquee-track{ display:inline-flex; gap:56px; animation: marquee 30s linear infinite; }
-.marquee:hover .marquee-track{ animation-play-state:paused; }
+.marquee-row + .marquee-row{ margin-top:6px; }
+.marquee-track{ display:inline-flex; gap:44px; }
+.marquee-track.left{ animation: marqueeLeft 28s linear infinite; }
+.marquee-track.right{ animation: marqueeRight 24s linear infinite; }
+.marquee-wrap:hover .marquee-track{ animation-play-state:paused; }
+
 .marquee-track span{
-    font-family:'Unbounded'; font-weight:800; font-size:19px; letter-spacing:0.02em;
-    display:inline-flex; align-items:center; gap:56px;
+    font-family:'Unbounded'; font-weight:800; letter-spacing:0.02em;
+    display:inline-flex; align-items:center; gap:44px;
 }
-.marquee-track span .word{
-    color:transparent;
-    -webkit-text-stroke:1px var(--muted);
-    transition: color .3s ease;
+.marquee-row.top .marquee-track span{
+    font-size:15px; color:var(--gold);
 }
-.marquee-track span .word:nth-child(4n+1),
-.marquee-track span .word:nth-child(4n+3){
-    color:var(--gold);
-    -webkit-text-stroke:0;
+.marquee-row.bottom .marquee-track span{
+    font-size:26px; color:transparent;
+    -webkit-text-stroke:1px var(--accent-bright);
 }
-.marquee-track span em{
-    font-style:normal; color:var(--accent-bright); font-size:12px;
+.marquee-track span em{ font-style:normal; color:var(--accent-bright); opacity:0.6; font-size:11px; }
+
+/* moving spotlight scan, independent of the text scroll */
+.marquee-wrap::after{
+    content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
+    width:220px;
+    background: linear-gradient(100deg, transparent 0%, rgba(242,236,232,0.22) 45%, rgba(219,168,101,0.28) 55%, transparent 100%);
+    filter: blur(6px);
+    mix-blend-mode: overlay;
+    animation: scanBeam 6s ease-in-out infinite;
 }
-@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+@keyframes scanBeam{
+    0%{ transform: translateX(-260px); }
+    100%{ transform: translateX(calc(100vw + 60px)); }
+}
+@keyframes marqueeLeft{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+@keyframes marqueeRight{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
+
+@media (max-width:860px){
+    .marquee-row.bottom .marquee-track span{ font-size:19px; }
+}
   /* ---------- NAV ---------- */
 header{
     position:fixed; top:0; left:0; right:0; z-index:50;
@@ -516,22 +537,40 @@ header.scrolled{
   </div>
 </section>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>
-      <span class="word">BRAND IDENTITY</span><em>◆</em>
-      <span class="word">WEB DESIGN</span><em>◆</em>
-      <span class="word">MARKETING</span><em>◆</em>
-      <span class="word">MOTION</span><em>◆</em>
-      <span class="word">3D</span><em>◆</em>
-    </span>
-    <span aria-hidden="true">
-      <span class="word">BRAND IDENTITY</span><em>◆</em>
-      <span class="word">WEB DESIGN</span><em>◆</em>
-      <span class="word">MARKETING</span><em>◆</em>
-      <span class="word">MOTION</span><em>◆</em>
-      <span class="word">3D</span><em>◆</em>
-    </span>
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-row top">
+    <div class="marquee-track left">
+      <span>
+        <span>BRAND IDENTITY</span><em>◆</em>
+        <span>WEB DESIGN</span><em>◆</em>
+        <span>MARKETING</span><em>◆</em>
+        <span>MOTION</span><em>◆</em>
+        <span>3D</span><em>◆</em>
+      </span>
+      <span>
+        <span>BRAND IDENTITY</span><em>◆</em>
+        <span>WEB DESIGN</span><em>◆</em>
+        <span>MARKETING</span><em>◆</em>
+        <span>MOTION</span><em>◆</em>
+        <span>3D</span><em>◆</em>
+      </span>
+    </div>
+  </div>
+  <div class="marquee-row bottom">
+    <div class="marquee-track right">
+      <span>
+        <span>VYREXO</span><em>◆</em>
+        <span>DIGITAL VENTURES</span><em>◆</em>
+        <span>VYREXO</span><em>◆</em>
+        <span>DIGITAL VENTURES</span><em>◆</em>
+      </span>
+      <span>
+        <span>VYREXO</span><em>◆</em>
+        <span>DIGITAL VENTURES</span><em>◆</em>
+        <span>VYREXO</span><em>◆</em>
+        <span>DIGITAL VENTURES</span><em>◆</em>
+      </span>
+    </div>
   </div>
 </div>
 
