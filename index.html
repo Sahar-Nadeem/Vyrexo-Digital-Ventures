@@ -131,9 +131,14 @@
   @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
   /* ---------- NAV ---------- */
- header{
+header{
     position:fixed; top:0; left:0; right:0; z-index:50;
     padding:22px 0;
+    transition: background .3s ease, backdrop-filter .3s ease;
+}
+header.scrolled{
+    backdrop-filter: blur(10px);
+    background: rgba(10,7,18,0.92);
 }
   header .wrap{ display:flex; align-items:center; justify-content:space-between; }
   .brand{
@@ -994,6 +999,20 @@
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank', 'noopener');
   });
+})();
+
+  (function(){
+  const header = document.querySelector('header');
+  if (!header) return;
+  function toggleHeaderBg(){
+    if (window.scrollY > 40){
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', toggleHeaderBg, { passive:true });
+  toggleHeaderBg();
 })();
 </script>
 
